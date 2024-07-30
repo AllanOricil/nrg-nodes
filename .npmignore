@@ -1,0 +1,14 @@
+.github
+.husky
+.gitignore
+.eslintrc.json
+.eslintignore
+.prettierignore
+.npmrc
+.releaserc.json
+node_modules
+src
+jsconfig.json
+tsconfig.json
+commitlint.config.js
+esbuild.config.js

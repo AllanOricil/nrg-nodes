@@ -1,0 +1,8 @@
+.husky
+.npmrc
+.eslintrc.json
+icons
+lib
+node_modules
+package.json
+package-lock.json
