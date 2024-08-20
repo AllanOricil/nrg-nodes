@@ -8,7 +8,7 @@ import Node from "./node";
  * @param {object} RED - The Node-RED runtime object. It provides methods to register and manage nodes.
  * @returns {function} - A higher-order function that takes a base class and returns a new class with additional Node-RED functionalities.
  */
-function createNodeRedNodeMixin(RED) {
+export function createNodeRedNodeMixin(RED) {
   return function (BaseClass) {
     if (!(BaseClass.prototype instanceof Node)) {
       throw new Error(`${BaseClass.name} must extend Node`);
@@ -56,23 +56,4 @@ function createNodeRedNodeMixin(RED) {
       }
     };
   };
-}
-
-/**
- * Registers multiple Node-RED nodes with the provided RED runtime.
- *
- * @param {object} RED - The Node-RED runtime object. It provides methods to register and manage nodes.
- * @param {Array<object>} nodes - An array of node-red node classes.
- * @throws {Error} If a Node class does not have a `type` property.
- */
-export function registerNodes(RED, nodes) {
-  const nodeRedNodeMixin = createNodeRedNodeMixin(RED);
-  for (const node of nodes) {
-    if (!node.type) {
-      throw new Error(
-        `${node.name} must declare its type as a static prop called type`,
-      );
-    }
-    RED.nodes.registerType(node.type, nodeRedNodeMixin(node));
-  }
 }

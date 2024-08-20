@@ -8,6 +8,13 @@
  */
 export default class Node {
   /**
+   * The global Node-RED object.
+   * Provides access to Node-RED runtime API.
+   * @type {NodeRed.RED}
+   * @static
+   */
+  static RED;
+  /**
    * Creates an instance of the Node class.
    * Initializes the node with the provided configuration and registers it with Node-RED.
    *
@@ -73,15 +80,5 @@ export default class Node {
    */
   onConfig(...args) {
     console.warn("onConfig() not implemented in this node.");
-  }
-
-  /**
-   * Gets the type of the node. This is used to register the node with Node-RED.
-   * The type is derived from the class name and is converted to lowercase.
-   *
-   * @returns {string} The type of the node.
-   */
-  static get type() {
-    return this.name.toLocaleLowerCase();
   }
 }

@@ -1,4 +1,4 @@
 import Node from "./node";
-import { registerNodes } from "./helper";
+import { createNodeRedNodeMixin } from "./helper";
 
-export { Node, registerNodes };
+export { Node, createNodeRedNodeMixin };
