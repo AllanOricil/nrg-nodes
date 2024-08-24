@@ -1,51 +1,11 @@
 # node-red-node
 
-A very simple lib that aims to ease the creation of node-red nodes using ES6+
+A very simple lib that aims to ease the creation of node-red nodes using ES6+.
 
 > [!IMPORTANT]
 > This lib does not provide or use typescript types for node-red objects or methods
 
-## 📁 Directory Structure
-
-```bash
-./my-custom-nodes
-├── assets/
-│   ├── icons/
-│   │   └── icon.png
-│   └── locales/
-│       ├── de/
-│       │   ├── index.hmtl
-│       │   └── index.json
-│       └── en-US/
-│           ├── index.html
-│           └── index.json
-├── dist/
-│   ├── icons/
-│   │   └── icon.png
-│   ├── locales/
-│   │   ├── de/
-│   │   │   ├── index.hmtl
-│   │   │   └── index.json
-│   │   └── en-US/
-│   │       ├── index.html
-│   │       └── index.json
-│   ├── index.html
-│   ├── index.js
-│   └── index.js.map
-├── src/
-│   ├── nodes/
-│   │   ├── my-custom-node/
-│   │   │   ├── index.js
-│   │   │   └── index.html
-│   └── index.js
-├── package.json
-└── package-lock.json
-```
-
-## 📖 How to create a Node using a Class
-
-1. Install this package as a dependency `npm install @allanoricil/node-red-node`
-2. Create a Node by extending the `Node` class, as shown below
+## 📖 How to define a Node
 
 ```js
 import { Node } from "@allanoricil/node-red-node";
@@ -54,6 +14,18 @@ import fetch from "node-fetch";
 export default class MyCustomNodeClass extends Node {
   constructor(config) {
     super(config);
+  }
+
+  static init(RED) {
+    console.log("This is going to be called only once, during registration");
+    RED.httpAdmin.get("/test", async function (req, res) {
+      try {
+        res.status(200).json({ message: "success" });
+      } catch (err) {
+        RED.log.error("ERROR:" + err.message);
+        res.status(500).json({ message: "something unknown happened" });
+      }
+    });
   }
 
   async onInput(msg, send, done) {
@@ -94,25 +66,3 @@ export default class MyCustomNodeClass extends Node {
   }
 }
 ```
-
-3. Finally, register `MyCustomNodeClass` in your entrypoint using `registerNodes` function
-
-```js
-import { registerNodes } from "@allanoricil/node-red-node";
-import { MyCustomNodeClass } from "@nodes";
-
-export default function (RED) {
-  registerNodes(RED, [MyCustomNodeClass]);
-}
-```
-
-> [!IMPORTANT]
-> the word `@nodes` is a path shorthand that must be configured in a `jsconfig.json` or `tsconfig.json` file in the root of your project. In the above example, it was configured as
->
-> ```json
-> {
->   "paths": {
->     "@nodes": ["./src/nodes"]
->   }
-> }
-> ```
