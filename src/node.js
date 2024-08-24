@@ -8,22 +8,23 @@
  */
 export default class Node {
   /**
-   * The global Node-RED object.
-   * Provides access to Node-RED runtime API.
-   * @type {NodeRed.RED}
+   * The Node-RED runtime object. This static property is used to provide access
+   * to Node-RED services such as logging, HTTP routes, and node registration.
+   *
    * @static
+   * @type {object}
+   * @memberof Node
    */
   static RED;
+
   /**
    * Creates an instance of the Node class.
    * Initializes the node with the provided configuration and registers it with Node-RED.
    *
-   * @param {object} config - The configuration object for the node-red node instance.
+   * @param {object} config - The configuration object for the Node-RED node instance.
    */
   constructor(config) {
-    console.log(config);
-    console.log("parent");
-
+    this.config = config;
     this.constructor.RED.nodes.createNode(this, config);
   }
 
@@ -31,10 +32,12 @@ export default class Node {
    * Handles input events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *
-   * @param {...any} args - The arguments for the input event.
+   * @param {object} msg - The message object containing data to be processed.
+   * @param {Function} send - Function to send a message or array of messages to other nodes.
+   * @param {Function} done - Function to signal completion of processing.
    * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
    */
-  onInput(...args) {
+  onInput(msg, send, done) {
     console.warn("onInput() not implemented in this node.");
   }
 
@@ -42,10 +45,10 @@ export default class Node {
    * Handles close events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *
-   * @param {...any} args - The arguments for the close event.
+   * @param {Function} done - Function to signal completion of close operations.
    * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
    */
-  onClose(...args) {
+  onClose(done) {
     console.warn("onClose() not implemented in this node.");
   }
 
@@ -53,10 +56,10 @@ export default class Node {
    * Handles ready events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *
-   * @param {...any} args - The arguments for the ready event.
+   * @param {object} context - The context object containing relevant data for the ready event.
    * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
    */
-  onReady(...args) {
+  onReady(context) {
     console.warn("onReady() not implemented in this node.");
   }
 
@@ -64,10 +67,11 @@ export default class Node {
    * Handles status events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *
-   * @param {...any} args - The arguments for the status event.
+   * @param {string} status - The status message or code indicating the current state of the node.
+   * @param {object} details - Additional details related to the status event.
    * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
    */
-  onStatus(...args) {
+  onStatus(status, details) {
     console.warn("onStatus() not implemented in this node.");
   }
 
@@ -75,10 +79,11 @@ export default class Node {
    * Handles configuration events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *
-   * @param {...any} args - The arguments for the configuration event.
+   * @param {object} config - The configuration object containing updated settings.
+   * @param {Function} done - Function to signal completion of configuration processing.
    * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
    */
-  onConfig(...args) {
+  onConfig(config, done) {
     console.warn("onConfig() not implemented in this node.");
   }
 }
