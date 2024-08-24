@@ -2,8 +2,8 @@ import Node from "./node";
 
 /**
  * Creates a mixin to extend Node-RED's node registration functionality.
- * This mixin ensures that the RED object is available in the class scope and
- * automatically registers event handlers defined in the base class.
+ * This mixin ensures that the RED object is available in the class scope,
+ * automatically registers the node and its event handlers.
  *
  * @param {object} RED - The Node-RED runtime object. It provides methods to register and manage nodes.
  * @returns {function} - A higher-order function that takes a base class and returns a new class with additional Node-RED functionalities.
@@ -23,16 +23,13 @@ export function createNodeRedNodeMixin(RED) {
     );
 
     return class extends BaseClass {
-      static RED = RED;
-
       /**
        * Creates an instance of a given node class and injects the RED object in it
        * @param {object} config - Configuration object for the node-red node instance.
        */
       constructor(config) {
         super(config);
-        console.log("derived class");
-
+        RED.nodes.createNode(this, config);
         this.setupEventHandlers();
       }
 

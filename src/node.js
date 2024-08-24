@@ -25,7 +25,6 @@ export default class Node {
    */
   constructor(config) {
     this.config = config;
-    this.constructor.RED.nodes.createNode(this, config);
   }
 
   /**
