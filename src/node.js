@@ -28,6 +28,22 @@ export default class Node {
   }
 
   /**
+   * Initializes the node class with the Node-RED runtime.
+   *
+   * This method is called once when the node class is first loaded by Node-RED.
+   * It can be used to perform any one-time setup required for the node, such as
+   * registering custom HTTP routes, initializing static properties, or setting
+   * up other runtime-specific configurations.
+   *
+   * @static
+   * @param {object} RED - The Node-RED runtime object. Provides access to various
+   * Node-RED services, such as logging, HTTP routes, and node registration.
+   */
+  static init(RED) {
+    console.warn("init not implemented for this node");
+  }
+
+  /**
    * Handles input events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *

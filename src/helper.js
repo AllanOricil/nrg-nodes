@@ -17,9 +17,9 @@ export function createNodeRedNodeMixin(RED) {
     const EVENT_HANDLER_PREFIX_RESERVED_WORD = "on";
 
     const EVENT_HANDLER_RESERVED_METHOD_NAMES = Object.getOwnPropertyNames(
-      Node.prototype
+      Node.prototype,
     ).filter((methodName) =>
-      methodName.startsWith(EVENT_HANDLER_PREFIX_RESERVED_WORD)
+      methodName.startsWith(EVENT_HANDLER_PREFIX_RESERVED_WORD),
     );
 
     Object.defineProperty(BaseClass, "RED", {
@@ -27,6 +27,10 @@ export function createNodeRedNodeMixin(RED) {
       writable: false,
       configurable: false,
     });
+
+    if (BaseClass.init) {
+      BaseClass.init(RED);
+    }
 
     return class extends BaseClass {
       /**
@@ -46,14 +50,14 @@ export function createNodeRedNodeMixin(RED) {
       setupEventHandlers() {
         Object.getOwnPropertyNames(BaseClass.prototype)
           .filter((methodName) =>
-            EVENT_HANDLER_RESERVED_METHOD_NAMES.includes(methodName)
+            EVENT_HANDLER_RESERVED_METHOD_NAMES.includes(methodName),
           )
           .forEach((methodName) => {
             this.on(
               methodName
                 .split(EVENT_HANDLER_PREFIX_RESERVED_WORD)[1]
                 .toLocaleLowerCase(),
-              this[methodName]
+              this[methodName],
             );
           });
       }
