@@ -44,6 +44,44 @@ export default class Node {
   }
 
   /**
+   * Defines the credentials schema for this Node-RED node.
+   *
+   * This method returns an object specifying the credentials required for configuring
+   * the node in the Node-RED editor. The object returned by this method is used as the
+   * `credentials` argument when registering the node type with `RED.nodes.registerType`.
+   *
+   * Each entry in the returned object represents a field that the user needs to provide
+   * when setting up the node. Each field configuration is an object that must include
+   * the `type` and `required` properties:
+   *
+   * - `type`: Specifies the type of the input field (e.g., `'text'`, `'password'`).
+   * - `required`: Indicates whether the field is required (`true` or `false`).
+   *
+   * The structure of the returned object should look like this:
+   *
+   * ```javascript
+   * {
+   *   fieldName: { type: 'fieldType', required: true }
+   * }
+   * ```
+   *
+   * @static
+   * @returns {Object} An object representing the credentials schema for the node.
+   * @property {Object} [fieldName] - Configuration for the credentials field.
+   * @property {string} [fieldName.type] - The type of input field.
+   * @property {boolean} [fieldName.required] - Whether the field is required.
+   *
+   * @example
+   * // Register the node type with Node-RED
+   * RED.nodes.registerType('example-node', ExampleNode, {
+   *   credentials: ExampleNode.credentials()
+   * });
+   */
+  static credentials() {
+    console.warn("credentials() not implemented in this node.");
+  }
+
+  /**
    * Handles input events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *
