@@ -22,7 +22,7 @@ export function createNodeRedNodeMixin(RED) {
       methodName.startsWith(EVENT_HANDLER_PREFIX_RESERVED_WORD),
     );
 
-    Object.defineProperty(BaseClass, "RED", {
+    Object.defineProperty(Node, "RED", {
       value: RED,
       writable: false,
       configurable: false,
@@ -39,7 +39,7 @@ export function createNodeRedNodeMixin(RED) {
        */
       constructor(config) {
         super(config);
-        RED.nodes.createNode(this, config);
+        Node.RED.nodes.createNode(this, config);
         this.setupEventHandlers();
       }
 
