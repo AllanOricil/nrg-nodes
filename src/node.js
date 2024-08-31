@@ -127,55 +127,16 @@ export default class Node {
    * @param {object} msg - The message object containing data to be processed.
    * @param {Function} send - Function to send a message or array of messages to other nodes.
    * @param {Function} done - Function to signal completion of processing.
-   * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
    */
   onInput(msg, send, done) {
     console.warn("onInput() not implemented in this node.");
   }
 
   /**
-   * Handles close events for the node.
+   * Called whenever a node is removed
    * This method should be overridden in derived classes to implement custom behavior.
-   *
-   * @param {Function} done - Function to signal completion of close operations.
-   * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
    */
-  onClose(done) {
+  onClose() {
     console.warn("onClose() not implemented in this node.");
-  }
-
-  /**
-   * Handles ready events for the node.
-   * This method should be overridden in derived classes to implement custom behavior.
-   *
-   * @param {object} context - The context object containing relevant data for the ready event.
-   * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
-   */
-  onReady(context) {
-    console.warn("onReady() not implemented in this node.");
-  }
-
-  /**
-   * Handles status events for the node.
-   * This method should be overridden in derived classes to implement custom behavior.
-   *
-   * @param {string} status - The status message or code indicating the current state of the node.
-   * @param {object} details - Additional details related to the status event.
-   * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
-   */
-  onStatus(status, details) {
-    console.warn("onStatus() not implemented in this node.");
-  }
-
-  /**
-   * Handles configuration events for the node.
-   * This method should be overridden in derived classes to implement custom behavior.
-   *
-   * @param {object} config - The configuration object containing updated settings.
-   * @param {Function} done - Function to signal completion of configuration processing.
-   * @throws {Error} When called without being overridden, logs a warning indicating it is not implemented.
-   */
-  onConfig(config, done) {
-    console.warn("onConfig() not implemented in this node.");
   }
 }
