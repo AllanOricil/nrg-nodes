@@ -1,4 +1,5 @@
 import Node from "./node";
+import camelCase from "camelcase";
 
 /**
  * Creates a mixin to extend Node-RED's node registration functionality.
@@ -9,9 +10,13 @@ import Node from "./node";
  * @returns {function} - A higher-order function that takes a base class and returns a new class with additional Node-RED functionalities.
  */
 export function createNodeRedNodeMixin(RED) {
-  return function (BaseClass) {
+  return function (BaseClass, type) {
     if (!(BaseClass.prototype instanceof Node)) {
       throw new Error(`${BaseClass.name} must extend Node`);
+    }
+
+    if (!type) {
+      throw new Error(`${type} must be provided`);
     }
 
     const EVENT_HANDLER_PREFIX_RESERVED_WORD = "on";
@@ -60,6 +65,27 @@ export function createNodeRedNodeMixin(RED) {
               this[methodName],
             );
           });
+      }
+
+      static registrationProperties() {
+        // NOTE: this transformation happens because Node-RED requires that each property is prepended with the node's type in camelCase.
+        // source: https://nodered.org/docs/creating-nodes/node-js#custom-node-settings
+        return {
+          credentials: BaseClass.credentials(),
+          settings: (() => {
+            const settings = BaseClass.settings();
+            if (!settings) return undefined;
+
+            const camelCaseType = camelCase(type);
+            for (const key in settings) {
+              const newKey = `${camelCaseType}${key}`;
+              settings[newKey] = settings[key];
+              delete settings[key];
+            }
+
+            return settings;
+          })(),
+        };
       }
     };
   };

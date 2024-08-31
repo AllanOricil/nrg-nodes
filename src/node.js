@@ -82,6 +82,45 @@ export default class Node {
   }
 
   /**
+   * Returns an object representing the settings configuration for the node.
+   * This method should be overridden in subclasses to provide the specific settings
+   * for each node type. If not implemented, a warn message will be logged to the console.
+   *
+   * The returned object is used in the `settings` property of `RED.nodes.registerType`
+   * to define custom settings for the node. These settings can be used to configure
+   * various aspects of the node in both the Node-RED editor and runtime.
+   *
+   * https://nodered.org/docs/creating-nodes/node-js#custom-node-settings
+   *
+   * @static
+   * @returns {Object} An object representing the settings configuration for the node.
+   *
+   * @example
+   * // Example of an implementation in a subclass, for a node type called my-node.
+   * // The "exampleSetting" attribute shown below will be accessible in the editor, and server, as `RED.settings.myNodeexampleSetting`.
+   * // The node's type is automatically appended to each attribute of the object returned by `static settings()` in camelCase, as required by Node-RED.
+   * // Remember that the name of the class does not define its type. The type is defined based on the name of the folder in ./src/nodes/node-1
+   * export default class Node1 extends Node {
+   *
+   *    construct(config) {
+   *        super(config);
+   *    }
+   *
+   *    static settings() {
+   *        return {
+   *            exampleSetting: {
+   *                value: "default",
+   *                exportable: true
+   *            }
+   *        };
+   *    }
+   * }
+   */
+  static settings() {
+    console.warn("settings() not implemented in this node.");
+  }
+
+  /**
    * Handles input events for the node.
    * This method should be overridden in derived classes to implement custom behavior.
    *

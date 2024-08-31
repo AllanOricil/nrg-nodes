@@ -1,0 +1,32 @@
+feat: add init function that is called once when the Node is being registered
+
+with this function, nodes have access to the RED global variable and can
+use it to register other node-red resources, such as a new http admin route
+
+
+static init(RED){
+  RED.httpAdmin.get("/test", async function (req, res) {
+      try {
+        res.status(200).json({ message: "success" });
+      } catch (err) {
+        RED.log.error("ERROR:" + err.message);
+        res.status(500).json({ message: "something unknown happened" });
+      }
+  });
+}
+
+This method is executed by the mixin, and runs only once
+
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is ahead of 'origin/main' by 3 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   src/helper.js
+#	modified:   src/node.js
+#
