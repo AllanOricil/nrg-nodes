@@ -1,6 +1,6 @@
 # node-red-node
 
-A very simple lib that aims to ease the creation of node-red nodes using ES6+.
+A very simple lib that aims to ease the creation of node-red nodes using ES6+ features.
 
 > [!IMPORTANT]
 > This lib does not provide or use typescript types for node-red objects or methods
@@ -16,6 +16,28 @@ export default class MyCustomNodeClass extends Node {
     super(config);
   }
 
+  // These are passed to `RED.nodes.registerType("type", MyCustomNodeClass, { credentials })`
+  static credentials() {
+    return {
+      username: { type: "text", required: true },
+      password: { type: "password", required: true },
+    };
+  }
+
+  // Considering this node's implementation is located at ./src/nodes/node-1/server/index.js, its type will be node-1.
+  // Therefore, the "customSetting" shown below will be accessible as 'RED.settings.node1customSetting' in both client and server side.
+  // Read this doc to understand more: https://nodered.org/docs/creating-nodes/node-js#custom-node-settings
+  // It feels weird, but this is how Node-RED is currently doing. I hope that in the future settings are scoped by node's type using another nested property. For example `RED.settings.["node-1"].customSettings`
+  static settings() {
+    return {
+      customSetting: {
+        value: "default",
+        exportable: true,
+      },
+    };
+  }
+
+  // NOTE: use this method to execute routines that have to happen while your node is being registered
   static init(RED) {
     console.log("This is going to be called only once, during registration");
     RED.httpAdmin.get("/test", async function (req, res) {
