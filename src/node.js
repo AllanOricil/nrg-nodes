@@ -61,7 +61,7 @@ export default class Node {
    * @static
    */
   static init(RED) {
-    RED.log.info(`${Node.type} did not implement init`);
+    RED.log.debug(`${Node.type} does not implement init`);
   }
 
   /**
@@ -99,7 +99,7 @@ export default class Node {
    * });
    */
   static credentials() {
-    console.warn("credentials() not implemented in this node.");
+    Node.RED.log.debug(`${this.type} does not implement credentials`);
   }
 
   /**
@@ -138,7 +138,7 @@ export default class Node {
    * }
    */
   static settings() {
-    console.warn("settings() not implemented in this node.");
+    Node.RED.log.debug(`${this.type} does not implement settings`);
   }
 
   /**
@@ -150,7 +150,9 @@ export default class Node {
    * @param {Function} done - Function to signal completion of processing.
    */
   onInput(msg, send, done) {
-    console.warn("onInput() not implemented in this node.");
+    this.debug(
+      `${this.type} does not implement event handler for the "input" event`,
+    );
   }
 
   /**
@@ -165,7 +167,9 @@ export default class Node {
    * @param {Function} [done] - A callback function that should be called when the close operation is complete.
    */
   onClose(removed, done) {
-    console.warn("onClose() not implemented in this node.");
+    this.debug(
+      `${this.type} does not implement event handler for the "clsoe" event`,
+    );
   }
 
   /**
