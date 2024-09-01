@@ -34,6 +34,12 @@ export default class Node {
   type;
 
   /**
+   * This is a hack to bypass "Node object is not a node-red Node log_helper (@node-red/runtime/lib/nodes/Node.js:526:20)"
+   * @private
+   */
+  _flow;
+
+  /**
    * Creates an instance of the Node class.
    * Initializes the node with the provided configuration and registers it with Node-RED.
    *
@@ -44,7 +50,6 @@ export default class Node {
     this.id = config.id;
     this.type = config.type;
 
-    // NOTE: this is a hack to bypass "Node object is not a node-red Node log_helper (/Users/allanoricil/node-red-es-test/node_modules/@node-red/runtime/lib/nodes/Node.js:526:20)"
     this._flow = config._flow;
   }
 
