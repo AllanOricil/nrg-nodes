@@ -33,6 +33,12 @@ export function createNodeRedNodeMixin(RED) {
       configurable: false,
     });
 
+    Object.defineProperty(Node, "type", {
+      value: type,
+      writable: true,
+      configurable: false,
+    });
+
     if (BaseClass.init) {
       BaseClass.init(RED);
     }
@@ -76,7 +82,7 @@ export function createNodeRedNodeMixin(RED) {
             const settings = BaseClass.settings();
             if (!settings) return undefined;
 
-            const camelCaseType = camelCase(type);
+            const camelCaseType = camelCase(BaseClass.type);
             for (const key in settings) {
               const newKey = `${camelCaseType}${key}`;
               settings[newKey] = settings[key];

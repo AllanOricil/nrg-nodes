@@ -18,6 +18,14 @@ export default class Node {
   static RED;
 
   /**
+   * The type of this Node-RED node instance.
+   *
+   * @type {string}
+   * @memberof Node
+   */
+  static type;
+
+  /**
    * The unique identifier for this Node-RED node instance.
    *
    * @type {string}
@@ -26,16 +34,9 @@ export default class Node {
   id;
 
   /**
-   * The type of this Node-RED node instance.
-   *
-   * @type {string}
-   * @memberof Node
-   */
-  type;
-
-  /**
    * This is a hack to bypass "Node object is not a node-red Node log_helper (@node-red/runtime/lib/nodes/Node.js:526:20)"
    * @private
+   * @memberof Node
    */
   _flow;
 
@@ -48,25 +49,19 @@ export default class Node {
   constructor(config) {
     this.config = config;
     this.id = config.id;
-    this.type = config.type;
-
     this._flow = config._flow;
   }
 
   /**
-   * Initializes the node class with the Node-RED runtime.
-   *
    * This method is called once when the node class is first loaded by Node-RED.
    * It can be used to perform any one-time setup required for the node, such as
    * registering custom HTTP routes, initializing static properties, or setting
    * up other runtime-specific configurations.
    *
    * @static
-   * @param {object} RED - The Node-RED runtime object. Provides access to various
-   * Node-RED services, such as logging, HTTP routes, and node registration.
    */
   static init(RED) {
-    console.warn("init not implemented for this node");
+    RED.log.info(`${Node.type} did not implement init`);
   }
 
   /**
@@ -171,5 +166,14 @@ export default class Node {
    */
   onClose(removed, done) {
     console.warn("onClose() not implemented in this node.");
+  }
+
+  /**
+   * Returns the type of the Node.
+   *
+   * @returns {string} The type of the Node.
+   */
+  get type() {
+    return Node.type;
   }
 }
