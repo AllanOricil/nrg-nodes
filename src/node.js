@@ -43,6 +43,9 @@ export default class Node {
     this.config = config;
     this.id = config.id;
     this.type = config.type;
+
+    // NOTE: this is a hack to bypass "Node object is not a node-red Node log_helper (/Users/allanoricil/node-red-es-test/node_modules/@node-red/runtime/lib/nodes/Node.js:526:20)"
+    this._flow = config._flow;
   }
 
   /**
