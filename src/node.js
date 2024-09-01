@@ -88,15 +88,21 @@ export default class Node {
    *
    * @static
    * @returns {Object} An object representing the credentials schema for the node.
-   * @property {Object} [fieldName] - Configuration for the credentials field.
-   * @property {string} [fieldName.type] - The type of input field.
-   * @property {boolean} [fieldName.required] - Whether the field is required.
    *
    * @example
-   * // Register the node type with Node-RED
-   * RED.nodes.registerType('example-node', ExampleNode, {
-   *   credentials: ExampleNode.credentials()
-   * });
+   * export default class Node1 extends Node {
+   *
+   *    construct(config) {
+   *        super(config);
+   *    }
+   *
+   *    static credentials() {
+   *        return {
+   *            username: { type: "text" },
+   *            password: { type: "password" },
+   *        };
+   *    }
+   * }
    */
   static credentials() {
     Node.RED.log.debug(`${this.type} does not implement credentials`);
