@@ -14,8 +14,22 @@ import fetch from "node-fetch";
 export default class MyCustomNodeClass extends Node {
   constructor(config) {
     super(config);
+    this.log(`constructed type: ${this.type} id: ${this.id}`);
   }
 
+  // Unlike the constructor, this executes only once, regardless of how many nodes of this type are in the flow.
+  static init() {
+    Node.RED.httpAdmin.get("/test", async function (req, res) {
+      try {
+        res.status(200).json({ message: "success" });
+      } catch (err) {
+        RED.log.error("ERROR:" + err.message);
+        res.status(500).json({ message: "something unknown happened" });
+      }
+    });
+  }
+
+  // Implement this method if your node has credentials
   // These are passed to `RED.nodes.registerType("type", MyCustomNodeClass, { credentials })`
   static credentials() {
     return {
@@ -37,22 +51,9 @@ export default class MyCustomNodeClass extends Node {
     };
   }
 
-  // NOTE: use this method to execute routines that have to happen while your node is being registered
-  static init(RED) {
-    console.log("This is going to be called only once, during registration");
-    RED.httpAdmin.get("/test", async function (req, res) {
-      try {
-        res.status(200).json({ message: "success" });
-      } catch (err) {
-        RED.log.error("ERROR:" + err.message);
-        res.status(500).json({ message: "something unknown happened" });
-      }
-    });
-  }
-
   async onInput(msg, send, done) {
     try {
-      console.log("node-1 on input", msg.payload);
+      this.log("node-1 on input", msg.payload);
       this.status({
         fill: "blue",
         shape: "ring",
@@ -68,9 +69,8 @@ export default class MyCustomNodeClass extends Node {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-
-      send({ payload: data });
-
+      msg.payload = data;
+      send(msg);
       done();
     } catch (error) {
       this.status({
@@ -78,13 +78,22 @@ export default class MyCustomNodeClass extends Node {
         shape: "ring",
         text: "error",
       });
-      console.error("Failed to fetch dog image:", error);
+      this.error("Failed to fetch dog image:", error);
       done(error);
     } finally {
       setTimeout(() => {
         this.status({});
       }, 3000);
     }
+  }
+
+  onClose(removed, done) {
+    if (removed) {
+      this.log(`type: ${this.type} id: ${this.id} disabled/deleted`);
+    } else {
+      this.log(`type: ${this.type} id: ${this.id} restarted`);
+    }
+    done();
   }
 }
 ```
