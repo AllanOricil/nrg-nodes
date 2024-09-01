@@ -40,7 +40,7 @@ export function createNodeRedNodeMixin(RED) {
     });
 
     if (BaseClass.init) {
-      BaseClass.init(RED);
+      BaseClass.init();
     }
 
     return class extends BaseClass {

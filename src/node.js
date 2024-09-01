@@ -60,8 +60,8 @@ export default class Node {
    *
    * @static
    */
-  static init(RED) {
-    RED.log.debug(`${Node.type} does not implement init`);
+  static init() {
+    Node.RED.log.debug(`${Node.type} does not implement init`);
   }
 
   /**
