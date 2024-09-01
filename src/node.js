@@ -18,6 +18,22 @@ export default class Node {
   static RED;
 
   /**
+   * The unique identifier for this Node-RED node instance.
+   *
+   * @type {string}
+   * @memberof Node
+   */
+  id;
+
+  /**
+   * The type of this Node-RED node instance.
+   *
+   * @type {string}
+   * @memberof Node
+   */
+  type;
+
+  /**
    * Creates an instance of the Node class.
    * Initializes the node with the provided configuration and registers it with Node-RED.
    *
@@ -25,6 +41,8 @@ export default class Node {
    */
   constructor(config) {
     this.config = config;
+    this.id = config.id;
+    this.type = config.type;
   }
 
   /**
@@ -133,10 +151,17 @@ export default class Node {
   }
 
   /**
-   * Called whenever a node is removed
+   * Called whenever a node is removed.
    * This method should be overridden in derived classes to implement custom behavior.
+   *
+   * @overload onClose(): void
+   * @overload onClose(done: Function): void
+   * @overload onClose(removed: boolean, done: Function): void
+   *
+   * @param {boolean} [removed] - Indicates if the node was removed from the flow (true) or redeployed (false).
+   * @param {Function} [done] - A callback function that should be called when the close operation is complete.
    */
-  onClose() {
+  onClose(removed, done) {
     console.warn("onClose() not implemented in this node.");
   }
 }
