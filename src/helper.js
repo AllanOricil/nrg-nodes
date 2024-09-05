@@ -10,7 +10,7 @@ import camelCase from "camelcase";
  * @returns {function} - A higher-order function that takes a base class and returns a new class with additional Node-RED functionalities.
  */
 export function createNodeRedNodeMixin(RED) {
-  return function (BaseClass, type) {
+  return async function (BaseClass, type) {
     if (!(BaseClass.prototype instanceof Node)) {
       throw new Error(`${BaseClass.name} must extend Node`);
     }
@@ -33,14 +33,24 @@ export function createNodeRedNodeMixin(RED) {
       configurable: false,
     });
 
-    Object.defineProperty(Node, "type", {
-      value: type,
-      writable: true,
+    Object.defineProperty(BaseClass, "RED", {
+      value: RED,
+      writable: false,
       configurable: false,
     });
 
-    if (BaseClass.init) {
-      BaseClass.init();
+    Object.defineProperty(BaseClass, "type", {
+      value: type,
+      writable: false,
+      configurable: false,
+    });
+
+    if (typeof BaseClass.init === "function") {
+      const result = BaseClass.init();
+
+      if (result instanceof Promise) {
+        await result;
+      }
     }
 
     return class extends BaseClass {
