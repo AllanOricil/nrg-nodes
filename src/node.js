@@ -221,4 +221,43 @@ export default class Node {
    * }
    */
   onClose(removed, done) {}
+
+  /**
+   * @typedef {object} NodeContext
+   * @property {function(string, any):void} set - Sets a value in the node context.
+   * @property {function(string):any} get - Retrieves a value from the node context.
+   */
+
+  /**
+   * Get the node context.
+   * The node context is specific to this node instance and is used to store data
+   * that persists for as long as the node is deployed.
+   *
+   * @type {NodeContext}
+   */
+  get nodeContext() {
+    return this.context();
+  }
+
+  /**
+   * Get the flow context.
+   * The flow context is shared among all nodes in the same flow and is used to store
+   * data that needs to be accessible by all nodes within the same flow.
+   *
+   * @type {NodeContext}
+   */
+  get flowContext() {
+    return this.context().flow;
+  }
+
+  /**
+   * Get the global context.
+   * The global context is shared among all nodes across all flows and is used to store
+   * data that needs to be accessible by all nodes in the entire Node-RED instance.
+   *
+   * @type {NodeContext}
+   */
+  get globalContext() {
+    return this.context().global;
+  }
 }
