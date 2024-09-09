@@ -64,6 +64,16 @@ export default class Node {
    */
   id;
 
+  /**
+   * The credentials stored in this Node-RED node instance.
+   *
+   * It is initialized by the parent class.
+   *
+   * @type {object}
+   * @memberof Node
+   */
+  credentials;
+
   // NOTE: a hack to bypass "Node object is not a node-red Node log_helper (@node-red/runtime/lib/nodes/Node.js:526:20)"
   /**
    * Internal flow reference used for managing the node's lifecycle in Node-RED.
@@ -85,6 +95,7 @@ export default class Node {
    * @memberof Node
    */
   constructor(config) {
+    Node.RED.nodes.createNode(this, config);
     this.config = config;
     this.id = config.id;
     this._flow = config._flow;

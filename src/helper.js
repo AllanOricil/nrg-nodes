@@ -60,7 +60,6 @@ export function createNodeRedNodeMixin(RED) {
        */
       constructor(config) {
         super(config);
-        Node.RED.nodes.createNode(this, config);
         this.setupEventHandlers();
       }
 
