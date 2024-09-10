@@ -1,7 +1,7 @@
 {
   "name": "@allanoricil/node-red-node",
-  "version": "0.0.0-beta.15",
-  "description": "A very simple lib that aims to ease the creation of custom node-red nodes using ES6+",
+  "version": "1.0.0",
+  "description": "A very simple lib that aims to ease and structure the creation of custom node-red nodes using ES6+ featues",
   "main": "./lib/index.cjs.js",
   "module": "./lib/index.esm.js",
   "types": "./lib/index.d.ts",
