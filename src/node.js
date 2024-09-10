@@ -240,17 +240,6 @@ export default class Node {
    */
 
   /**
-   * Get the node context.
-   * The node context is specific to this node instance and is used to store data
-   * that persists for as long as the node is deployed.
-   *
-   * @type {NodeContext}
-   */
-  get nodeContext() {
-    return this.context();
-  }
-
-  /**
    * Get the flow context.
    * The flow context is shared among all nodes in the same flow and is used to store
    * data that needs to be accessible by all nodes within the same flow.
