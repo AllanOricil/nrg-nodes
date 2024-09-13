@@ -91,9 +91,8 @@ export function createNodeRedNodeMixin(RED) {
             const settings = BaseClass.settings();
             if (!settings) return undefined;
 
-            const camelCaseType = camelCase(BaseClass.type);
             for (const key in settings) {
-              const newKey = `${camelCaseType}${key}`;
+              const newKey = camelCase(`${BaseClass.type}-${key}`);
               settings[newKey] = settings[key];
               delete settings[key];
             }
