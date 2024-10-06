@@ -8,7 +8,7 @@ A very simple lib that aims to ease the creation of node-red nodes using ES6+ fe
 ## 📖 How to define a Node
 
 ```js
-import { Node } from "@allanoricil/node-red-node";
+import { Node } from "@allanoricil/nrg-nodes";
 import fetch from "node-fetch";
 
 export default class MyCustomNodeClass extends Node {
