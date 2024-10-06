@@ -1,5 +1,5 @@
 {
-  "name": "@allanoricil/node-red-node",
+  "name": "@allanoricil/nrg-nodes",
   "version": "1.0.1",
   "description": "A very simple lib that aims to ease and structure the creation of custom node-red nodes using ES6+ featues",
   "main": "./lib/index.cjs.js",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AllanOricil/node-red-node"
+    "url": "https://github.com/AllanOricil/nrg-nodes"
   },
   "bugs": {
-    "url": "https://github.com/AllanOricil/node-red-node/issues"
+    "url": "https://github.com/AllanOricil/nrg-nodes/issues"
   },
-  "homepage": "https://github.com/AllanOricil/node-red-node#readme",
+  "homepage": "https://github.com/AllanOricil/nrg-nodes#readme",
   "license": "MIT",
   "engines": {
     "node": ">=18"
