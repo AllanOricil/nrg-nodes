@@ -23,7 +23,7 @@ export default class MyCustomNodeClass extends Node {
       try {
         res.status(200).json({ message: "success" });
       } catch (err) {
-        RED.log.error("ERROR:" + err.message);
+        Node.RED.log.error("ERROR:" + err.message);
         res.status(500).json({ message: "something unknown happened" });
       }
     });
