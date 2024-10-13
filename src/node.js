@@ -260,4 +260,29 @@ export default class Node {
   get globalContext() {
     return this.context().global;
   }
+
+  /**
+   * Evaluates a Node-RED node property asynchronously.
+   *
+   * @async
+   * @param {*} value - The value to be evaluated. This can be a literal, environment variable, or flow property.
+   * @param {string} type - The type of the property (e.g., "str", "num", "flow", "global").
+   * @param {Object} msg - The message object passed through the Node-RED flow.
+   * @returns {Promise<*>} A promise that resolves with the evaluated result or rejects with an error.
+   * @throws {Error} If an error occurs during the evaluation process.
+   */
+  async evaluateProperty(value, type, msg) {
+    return new Promise((resolve, reject) => {
+      Node.RED.util.evaluateNodeProperty(
+        value,
+        type,
+        this,
+        msg,
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        },
+      );
+    });
+  }
 }
