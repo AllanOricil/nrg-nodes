@@ -22,12 +22,17 @@
   },
   "homepage": "https://github.com/AllanOricil/nrg-nodes#readme",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "engines": {
     "node": ">=18"
   },
   "keywords": [
     "node-red",
-    "es6+"
+    "es6+",
+    "nrg"
   ],
   "scripts": {
     "lint": "eslint .",

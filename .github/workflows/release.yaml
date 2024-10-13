@@ -2,6 +2,14 @@ name: Release
 on:
   workflow_dispatch:
 
+permissions:
+  packages: write
+  pull-requests: write
+  contents: write
+  issues: write
+  id-token: write
+  attestations: write
+
 jobs:
   release:
     name: Release
@@ -32,8 +40,19 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Attest
+        uses: actions/attest-build-provenance@v1.4.3
+        with:
+          subject-path: |
+            lib/**/*
+            LICENSE
+            README.md
+            package.json
+
       - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4.1.1
         env:
+          HUSKY: 0
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+          NPM_CONFIG_PROVENANCE: true
