@@ -17,7 +17,7 @@ export default class MyCustomNodeClass extends Node {
     this.log(`constructed type: ${this.type} id: ${this.id}`);
   }
 
-  // Unlike the constructor, this executes only once, regardless of how many nodes of this type are in the flow.
+  // NOTE: Unlike the constructor, this executes only once, regardless of how many nodes of this type are in the flow.
   static init() {
     Node.RED.httpAdmin.get("/test", async function (req, res) {
       try {
@@ -29,8 +29,7 @@ export default class MyCustomNodeClass extends Node {
     });
   }
 
-  // Implement this method if your node has credentials
-  // These are passed to `RED.nodes.registerType("type", MyCustomNodeClass, { credentials })`
+  // NOTE: Implement this method if your node has credentials. This object is passed to `RED.nodes.registerType("type", MyCustomNodeClass, { credentials })`
   static credentials() {
     return {
       username: { type: "text", required: true },
@@ -38,10 +37,12 @@ export default class MyCustomNodeClass extends Node {
     };
   }
 
-  // Considering this node's implementation is located at ./src/nodes/node-1/server/index.js, its type will be node-1.
-  // Therefore, the "customSetting" shown below will be accessible as 'RED.settings.node1customSetting' in both client and server side.
-  // Read this doc to understand more: https://nodered.org/docs/creating-nodes/node-js#custom-node-settings
-  // It feels weird, but this is how Node-RED is currently doing. I hope that in the future settings are scoped by node's type using another nested property. For example `RED.settings.["node-1"].customSettings`
+  /*
+    NOTE: Considering this node's implementation is located at ./src/nodes/node-1/server/index.js, its type will be node-1.
+    Therefore, the "customSetting" shown below will be accessible as 'RED.settings.node1CustomSetting' in both client and server side.
+    Read this doc to understand more: https://nodered.org/docs/creating-nodes/node-js#custom-node-settings
+    It feels weird, but this is how Node-RED is currently handling custom settings. I hope that in the future settings are scoped by node's type using another nested property. For example `RED.settings.["node-1"].customSettings`
+  */
   static settings() {
     return {
       customSetting: {
