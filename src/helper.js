@@ -27,23 +27,29 @@ export function createNodeRedNodeMixin(RED) {
       methodName.startsWith(EVENT_HANDLER_PREFIX_RESERVED_WORD),
     );
 
-    Object.defineProperty(Node, "RED", {
-      value: RED,
-      writable: false,
-      configurable: false,
-    });
+    if (Node.RED === undefined) {
+      Object.defineProperty(Node, "RED", {
+        value: RED,
+        writable: false,
+        configurable: false,
+      });
+    }
 
-    Object.defineProperty(BaseClass, "RED", {
-      value: RED,
-      writable: false,
-      configurable: false,
-    });
+    if (BaseClass.RED === undefined) {
+      Object.defineProperty(BaseClass, "RED", {
+        value: RED,
+        writable: false,
+        configurable: false,
+      });
+    }
 
-    Object.defineProperty(BaseClass, "type", {
-      value: type,
-      writable: false,
-      configurable: false,
-    });
+    if (BaseClass.type === undefined) {
+      Object.defineProperty(BaseClass, "type", {
+        value: type,
+        writable: false,
+        configurable: false,
+      });
+    }
 
     if (typeof BaseClass.init === "function") {
       const result = BaseClass.init();
